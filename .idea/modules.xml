@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../AndroidStudioProjects.iml" filepath="$PROJECT_DIR$/../AndroidStudioProjects.iml" />
       <module fileurl="file://$PROJECT_DIR$/App/App.iml" filepath="$PROJECT_DIR$/App/App.iml" />
       <module fileurl="file://$PROJECT_DIR$/SterownikMonitorLark.iml" filepath="$PROJECT_DIR$/SterownikMonitorLark.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SterownikMonitorLark7065.iml" filepath="$PROJECT_DIR$/SterownikMonitorLark7065.iml" />
     </modules>
   </component>
 </project>
