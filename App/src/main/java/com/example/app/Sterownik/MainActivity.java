@@ -40,7 +40,7 @@ public class MainActivity extends Activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        SterownikClient = new Sterownik("192.168.1.66",80);
+        SterownikClient = new Sterownik("192.168.0.23",80);
         SterownikClient.Connect();
 
 

@@ -30,13 +30,13 @@ public class Schemat extends Fragment {
 
     public void Update() throws IOException {
 
-        mainActivity.SterownikClient.ReadTemps();
+        if (mainActivity.SterownikClient.Connected)
+            mainActivity.SterownikClient.ReadTemps();
 
         mainActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
 
-                if (mainActivity.SterownikClient.Connected) {
                     TempSensorView co = (TempSensorView) mainActivity.findViewById(R.id.co);
                     TempSensorView cwu = (TempSensorView) mainActivity.findViewById(R.id.cwu);
                     TempSensorView zew = (TempSensorView) mainActivity.findViewById(R.id.zew);
@@ -56,7 +56,6 @@ public class Schemat extends Fragment {
                         bwyj.SetTemperature(mainActivity.SterownikClient.Temps.get("BojWyj").Temperature);
                         dom.SetTemperature(mainActivity.SterownikClient.Temps.get("Dom").Temperature);
                     }
-                }
             }
         });
     }

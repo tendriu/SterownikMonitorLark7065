@@ -43,6 +43,7 @@ public class Sterownik extends SterownikConnection {
         Temps.put("BojWej", new TempSensorDevice("BojWej"));
         Temps.put("BojWyj", new TempSensorDevice("BojWyj"));
         Temps.put("Zew", new TempSensorDevice("Zew"));
+        Temps.put("Dom", new TempSensorDevice("Dom"));
 
         TrybCO = new TrybCO();
         TrybCWU = new TrybCWU();

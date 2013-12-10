@@ -7,47 +7,45 @@
     android:background="#ffffff">
 
     <!-- TODO: Update blank fragment layout -->
+
     <ImageView
-        android:layout_width="659px"
-        android:layout_height="407px"
+        android:layout_width="640px"
+        android:layout_height="364px"
         android:id="@+id/imageView"
-        android:layout_y="8dp"
-        android:src="@drawable/schemattlo"
-        android:scaleType="centerCrop"
-        android:textAlignment="center"
-        android:adjustViewBounds="false"
-        android:padding="0dp"
-        android:layout_x="160dp" />
+        android:layout_x="178dp"
+        android:layout_y="14dp"
+        android:src="@drawable/tlo"
+        android:scaleType="fitCenter" />
 
     <com.example.app.Sterownik.TempSensorView
         android:layout_width="117dp"
         android:layout_height="wrap_content"
-        android:layout_x="789dp"
-        android:layout_y="210dp"
+        android:layout_x="806dp"
+        android:layout_y="181dp"
         attr:Name="CO"
         android:id="@+id/co" />
 
     <com.example.app.Sterownik.TempSensorView
         android:layout_width="117dp"
         android:layout_height="wrap_content"
-        android:layout_x="693dp"
-        android:layout_y="44dp"
+        android:layout_x="717dp"
+        android:layout_y="32dp"
         attr:Name="DOM"
         android:id="@+id/dom" />
 
     <com.example.app.Sterownik.TempSensorView
         android:layout_width="117dp"
         android:layout_height="wrap_content"
-        android:layout_x="513dp"
-        android:layout_y="226dp"
+        android:layout_x="534dp"
+        android:layout_y="220dp"
         attr:Name="CWU"
         android:id="@+id/cwu" />
 
     <FrameLayout
         android:layout_width="229dp"
         android:layout_height="66dp"
-        android:layout_x="388dp"
-        android:layout_y="44dp">
+        android:layout_x="437dp"
+        android:layout_y="48dp">
         <com.example.app.Sterownik.TempSensorView
             android:layout_width="117dp"
             android:layout_height="wrap_content"
@@ -63,8 +61,8 @@
     <FrameLayout
     android:layout_width="220dp"
     android:layout_height="wrap_content"
-    android:layout_x="225dp"
-    android:layout_y="406dp">
+    android:layout_x="242dp"
+    android:layout_y="369dp">
     <com.example.app.Sterownik.TempSensorView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -76,8 +74,8 @@
     <FrameLayout
         android:layout_width="220dp"
         android:layout_height="wrap_content"
-        android:layout_x="225dp"
-        android:layout_y="501dp">
+        android:layout_x="245dp"
+        android:layout_y="466dp">
         <com.example.app.Sterownik.TempSensorView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -89,8 +87,9 @@
     <FrameLayout
         android:layout_width="220dp"
         android:layout_height="wrap_content"
-        android:layout_x="126dp"
-        android:layout_y="70dp">
+        android:layout_x="134dp"
+        android:layout_y="32dp">
+
         <com.example.app.Sterownik.TempSensorView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -102,8 +101,8 @@
     <FrameLayout
         android:layout_width="220dp"
         android:layout_height="wrap_content"
-        android:layout_x="-9dp"
-        android:layout_y="245dp">
+        android:layout_x="-12dp"
+        android:layout_y="210dp">
         <com.example.app.Sterownik.TempSensorView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -116,8 +115,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/editText"
-        android:layout_x="941dp"
-        android:layout_y="377dp"
+        android:layout_x="958dp"
+        android:layout_y="334dp"
         android:text="POMPA CO"
         android:singleLine="false"
         android:focusable="false"
@@ -130,8 +129,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/editText"
-        android:layout_x="854dp"
-        android:layout_y="506dp"
+        android:layout_x="880dp"
+        android:layout_y="466dp"
         android:text="WENTYLATOR"
         android:singleLine="false"
         android:focusable="false"
@@ -144,8 +143,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/editText"
-        android:layout_x="96dp"
-        android:layout_y="510dp"
+        android:layout_x="97dp"
+        android:layout_y="470dp"
         android:text="POMPA KOL."
         android:singleLine="false"
         android:focusable="false"
@@ -153,6 +152,7 @@
         android:textColor="#ffffff"
         android:padding="5dp"
         android:textSize="15sp" />
+
 
 
 
