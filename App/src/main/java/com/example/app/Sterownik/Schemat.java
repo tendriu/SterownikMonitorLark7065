@@ -8,18 +8,50 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 public class Schemat extends Fragment {
 
-    private OnFragmentInteractionListener mListener;
-
+    public MainActivity mainActivity;
+    private Timer TimerLoop;
     // TODO: Rename and change types and number of parameters
     public static Schemat newInstance() {
         Schemat fragment = new Schemat();
         return fragment;
     }
     public Schemat() {
-        // Required empty public constructor
+
+    }
+
+    public void Update()
+    {
+        mainActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                TempSensorView co = (TempSensorView)mainActivity.findViewById(R.id.co);
+                TempSensorView cwu = (TempSensorView)mainActivity.findViewById(R.id.cwu);
+                TempSensorView zew = (TempSensorView)mainActivity.findViewById(R.id.zew);
+                TempSensorView kwej = (TempSensorView)mainActivity.findViewById(R.id.kwej);
+                TempSensorView kwyj = (TempSensorView)mainActivity.findViewById(R.id.kwyj);
+                TempSensorView bwej = (TempSensorView)mainActivity.findViewById(R.id.bwej);
+                TempSensorView bwyj = (TempSensorView)mainActivity.findViewById(R.id.bwyj);
+                TempSensorView dom = (TempSensorView)mainActivity.findViewById(R.id.dom);
+
+                if(co!=null)
+                {
+                    co.SetTemperature(co.Temperature + 0.25);
+                    cwu.SetTemperature(cwu.Temperature + 0.57);
+                    zew.SetTemperature(zew.Temperature + 0.77);
+                    kwej.SetTemperature(kwej.Temperature + 0.27);
+                    kwyj.SetTemperature(kwyj.Temperature + 0.67);
+                    bwej.SetTemperature(bwej.Temperature + 0.17);
+                    bwyj.SetTemperature(bwyj.Temperature + 0.97);
+                    dom.SetTemperature(dom.Temperature + 0.4);
+                }
+            }
+        });
     }
 
     @Override
@@ -36,8 +68,8 @@ public class Schemat extends Fragment {
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+        if (mainActivity != null) {
+            mainActivity.onFragmentInteraction(uri);
         }
     }
 
@@ -45,7 +77,17 @@ public class Schemat extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mListener = (OnFragmentInteractionListener) activity;
+
+            mainActivity = (MainActivity) activity;
+
+            TimerLoop = new Timer();
+            TimerLoop.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    Update();
+                }
+            }, 0, 1000);
+
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -55,6 +97,7 @@ public class Schemat extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+
+        TimerLoop.cancel();
     }
 }

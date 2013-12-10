@@ -5,7 +5,7 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <declare-styleable name = "com.example.app.Sterownik.TempSensorView">
+    <declare-styleable name = "TempSensorView">
         <attr name="Name" format="string" />
     </declare-styleable>
 

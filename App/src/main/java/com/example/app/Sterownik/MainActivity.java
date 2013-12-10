@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
@@ -72,11 +73,31 @@ public class MainActivity extends Activity
                 fragment = SchematFragment;
                 break;
         }
+
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction()
+
+        FragmentTransaction trans = fragmentManager.beginTransaction();
+        if(!addedFragments)
+        {
+            trans.add(R.id.container, SchematFragment);
+            trans.hide(SchematFragment);
+            trans.add(R.id.container, UstawieniaFragment);
+            trans.hide(UstawieniaFragment);
+            addedFragments = true;
+        }
+
+        if(currentFragment!=null)
+            trans.hide(currentFragment).show(fragment).commit();
+        else
+            trans.show(fragment).commit();
+
+        currentFragment = fragment;
+     /*   fragmentManager.beginTransaction()
                 .replace(R.id.container, fragment)
-                .commit();
+                .commit();*/
     }
+    private Fragment currentFragment=null;
+    boolean addedFragments = false;
 
     public void onSectionAttached(int number) {
         switch (number) {
@@ -97,6 +118,12 @@ public class MainActivity extends Activity
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(mTitle);
+    }
+
+    public void OnClick(View sender)
+    {
+        TempSensorView co = (TempSensorView)findViewById(R.id.co);
+        co.SetTemperature(co.Temperature + 0.25);
     }
 
 

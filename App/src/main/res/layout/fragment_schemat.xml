@@ -3,15 +3,157 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.app.Sterownik.Schemat">
+    tools:context="com.example.app.Sterownik.Schemat"
+    android:background="#ffffff">
 
     <!-- TODO: Update blank fragment layout -->
+    <ImageView
+        android:layout_width="659px"
+        android:layout_height="407px"
+        android:id="@+id/imageView"
+        android:layout_y="8dp"
+        android:src="@drawable/schemattlo"
+        android:scaleType="centerCrop"
+        android:textAlignment="center"
+        android:adjustViewBounds="false"
+        android:padding="0dp"
+        android:layout_x="160dp" />
 
     <com.example.app.Sterownik.TempSensorView
-        android:layout_width="265dp"
-        android:layout_height="44dp"
-        android:layout_x="100dp"
-        android:layout_y="105dp"
-        attr:Name="ds"
-        />
+        android:layout_width="117dp"
+        android:layout_height="wrap_content"
+        android:layout_x="789dp"
+        android:layout_y="210dp"
+        attr:Name="CO"
+        android:id="@+id/co" />
+
+    <com.example.app.Sterownik.TempSensorView
+        android:layout_width="117dp"
+        android:layout_height="wrap_content"
+        android:layout_x="693dp"
+        android:layout_y="44dp"
+        attr:Name="DOM"
+        android:id="@+id/dom" />
+
+    <com.example.app.Sterownik.TempSensorView
+        android:layout_width="117dp"
+        android:layout_height="wrap_content"
+        android:layout_x="513dp"
+        android:layout_y="226dp"
+        attr:Name="CWU"
+        android:id="@+id/cwu" />
+
+    <FrameLayout
+        android:layout_width="229dp"
+        android:layout_height="66dp"
+        android:layout_x="388dp"
+        android:layout_y="44dp">
+        <com.example.app.Sterownik.TempSensorView
+            android:layout_width="117dp"
+            android:layout_height="wrap_content"
+            android:layout_x="365dp"
+            android:layout_y="57dp"
+            attr:Name="ZEW"
+            android:id="@+id/zew"
+            android:layout_gravity="center" />
+    </FrameLayout>
+
+
+
+    <FrameLayout
+    android:layout_width="220dp"
+    android:layout_height="wrap_content"
+    android:layout_x="225dp"
+    android:layout_y="406dp">
+    <com.example.app.Sterownik.TempSensorView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        attr:Name="B.WEJ"
+        android:id="@+id/bwej"
+        android:layout_gravity="right|center_vertical" />
+</FrameLayout>
+
+    <FrameLayout
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_x="225dp"
+        android:layout_y="501dp">
+        <com.example.app.Sterownik.TempSensorView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            attr:Name="B.WYJ"
+            android:id="@+id/bwyj"
+            android:layout_gravity="right|center_vertical" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_x="126dp"
+        android:layout_y="70dp">
+        <com.example.app.Sterownik.TempSensorView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            attr:Name="K.WYJ"
+            android:id="@+id/kwyj"
+            android:layout_gravity="right|center_vertical" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_x="-9dp"
+        android:layout_y="245dp">
+        <com.example.app.Sterownik.TempSensorView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            attr:Name="K.WEJ"
+            android:id="@+id/kwej"
+            android:layout_gravity="right|center_vertical" />
+    </FrameLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText"
+        android:layout_x="941dp"
+        android:layout_y="377dp"
+        android:text="POMPA CO"
+        android:singleLine="false"
+        android:focusable="false"
+        android:background="#000000"
+        android:textColor="#ffffff"
+        android:padding="5dp"
+        android:textSize="15sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText"
+        android:layout_x="854dp"
+        android:layout_y="506dp"
+        android:text="WENTYLATOR"
+        android:singleLine="false"
+        android:focusable="false"
+        android:background="#000000"
+        android:textColor="#ffffff"
+        android:padding="5dp"
+        android:textSize="15sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText"
+        android:layout_x="96dp"
+        android:layout_y="510dp"
+        android:text="POMPA KOL."
+        android:singleLine="false"
+        android:focusable="false"
+        android:background="#000000"
+        android:textColor="#ffffff"
+        android:padding="5dp"
+        android:textSize="15sp" />
+
+
+
 </AbsoluteLayout>
