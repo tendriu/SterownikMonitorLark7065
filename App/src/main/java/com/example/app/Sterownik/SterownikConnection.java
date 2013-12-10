@@ -29,20 +29,26 @@ public class SterownikConnection
 
     public void Connect()
     {
-        try
-        {
-            Client = new Socket(IP, Port);
 
-            OutStream = new DataOutputStream(Client.getOutputStream());
-            InStream = new BufferedReader(new InputStreamReader(Client.getInputStream()));
+            (new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try
+                {
+                    Client = new Socket(IP, Port);
 
-            Connected = true;
-        }
-        catch (Exception ex)
-        {
-            OnConnectionError(ex.getMessage());
-        }
+                    OutStream = new DataOutputStream(Client.getOutputStream());
+                    InStream = new BufferedReader(new InputStreamReader(Client.getInputStream()));
+
+                    Connected = true;
+                }
+                catch (Exception ex)
+                {
+                    OnConnectionError(ex.getMessage());
+                }
+            }})).start();
     }
+
 
     void OnConnectionError(String message)
     {
@@ -97,7 +103,10 @@ public class SterownikConnection
 
     public String ReadString(int length) throws UnsupportedEncodingException,IOException {
         byte[] buff = ReadArray(length);
-        return new String(buff, "UTF8");
+        String val = new String(buff, "UTF8");
+        if(val.indexOf(0)>=0)
+            return  val.substring(0,val.indexOf(0));
+        return val;
     }
 
     public byte[] Procedure(short procID, int returnLength, byte... param) throws IOException

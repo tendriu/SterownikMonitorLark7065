@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -16,39 +17,45 @@ public class Schemat extends Fragment {
 
     public MainActivity mainActivity;
     private Timer TimerLoop;
+
     // TODO: Rename and change types and number of parameters
     public static Schemat newInstance() {
         Schemat fragment = new Schemat();
         return fragment;
     }
+
     public Schemat() {
 
     }
 
-    public void Update()
-    {
+    public void Update() throws IOException {
+
+        mainActivity.SterownikClient.ReadTemps();
+
         mainActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                TempSensorView co = (TempSensorView)mainActivity.findViewById(R.id.co);
-                TempSensorView cwu = (TempSensorView)mainActivity.findViewById(R.id.cwu);
-                TempSensorView zew = (TempSensorView)mainActivity.findViewById(R.id.zew);
-                TempSensorView kwej = (TempSensorView)mainActivity.findViewById(R.id.kwej);
-                TempSensorView kwyj = (TempSensorView)mainActivity.findViewById(R.id.kwyj);
-                TempSensorView bwej = (TempSensorView)mainActivity.findViewById(R.id.bwej);
-                TempSensorView bwyj = (TempSensorView)mainActivity.findViewById(R.id.bwyj);
-                TempSensorView dom = (TempSensorView)mainActivity.findViewById(R.id.dom);
 
-                if(co!=null)
-                {
-                    co.SetTemperature(co.Temperature + 0.25);
-                    cwu.SetTemperature(cwu.Temperature + 0.57);
-                    zew.SetTemperature(zew.Temperature + 0.77);
-                    kwej.SetTemperature(kwej.Temperature + 0.27);
-                    kwyj.SetTemperature(kwyj.Temperature + 0.67);
-                    bwej.SetTemperature(bwej.Temperature + 0.17);
-                    bwyj.SetTemperature(bwyj.Temperature + 0.97);
-                    dom.SetTemperature(dom.Temperature + 0.4);
+                if (mainActivity.SterownikClient.Connected) {
+                    TempSensorView co = (TempSensorView) mainActivity.findViewById(R.id.co);
+                    TempSensorView cwu = (TempSensorView) mainActivity.findViewById(R.id.cwu);
+                    TempSensorView zew = (TempSensorView) mainActivity.findViewById(R.id.zew);
+                    TempSensorView kwej = (TempSensorView) mainActivity.findViewById(R.id.kwej);
+                    TempSensorView kwyj = (TempSensorView) mainActivity.findViewById(R.id.kwyj);
+                    TempSensorView bwej = (TempSensorView) mainActivity.findViewById(R.id.bwej);
+                    TempSensorView bwyj = (TempSensorView) mainActivity.findViewById(R.id.bwyj);
+                    TempSensorView dom = (TempSensorView) mainActivity.findViewById(R.id.dom);
+
+                    if (co != null) {
+                        co.SetTemperature(mainActivity.SterownikClient.Temps.get("CO").Temperature);
+                        cwu.SetTemperature(mainActivity.SterownikClient.Temps.get("CWU").Temperature);
+                        zew.SetTemperature(mainActivity.SterownikClient.Temps.get("Zew").Temperature);
+                        kwej.SetTemperature(mainActivity.SterownikClient.Temps.get("KolWej").Temperature);
+                        kwyj.SetTemperature(mainActivity.SterownikClient.Temps.get("KolWyj").Temperature);
+                        bwej.SetTemperature(mainActivity.SterownikClient.Temps.get("BojWej").Temperature);
+                        bwyj.SetTemperature(mainActivity.SterownikClient.Temps.get("BojWyj").Temperature);
+                        dom.SetTemperature(mainActivity.SterownikClient.Temps.get("Dom").Temperature);
+                    }
                 }
             }
         });
@@ -84,7 +91,11 @@ public class Schemat extends Fragment {
             TimerLoop.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    Update();
+                    try {
+                        Update();
+                    } catch (Exception ex) {
+
+                    }
                 }
             }, 0, 1000);
 

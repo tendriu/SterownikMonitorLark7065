@@ -65,6 +65,7 @@ public class Sterownik extends SterownikConnection {
     }
 
     private void ReadAllTemps() throws IOException {
+
         WriteProcedureHeader((short) 5);
         int count = ReadInt08();
         for (int x = 0; x < count; x++) {

@@ -30,6 +30,7 @@ public class MainActivity extends Activity
 
     public Schemat SchematFragment = null;
     public Ustawienia UstawieniaFragment = null;
+    public Sterownik SterownikClient;
 
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
@@ -38,6 +39,10 @@ public class MainActivity extends Activity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        SterownikClient = new Sterownik("192.168.1.66",80);
+        SterownikClient.Connect();
+
 
         SchematFragment = Schemat.newInstance();
         UstawieniaFragment = Ustawienia.newInstance();
