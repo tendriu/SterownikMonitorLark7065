@@ -1,12 +1,20 @@
 package com.example.app.Sterownik;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.io.IOException;
 import java.util.Timer;
@@ -31,7 +39,11 @@ public class Schemat extends Fragment {
     public void Update() throws IOException {
 
         if (mainActivity.SterownikClient.Connected)
+        {
             mainActivity.SterownikClient.ReadTemps();
+            mainActivity.SterownikClient.ReadTrybCO();
+            mainActivity.SterownikClient.ReadDevicesState();
+        }
 
         mainActivity.runOnUiThread(new Runnable() {
             @Override
@@ -56,6 +68,42 @@ public class Schemat extends Fragment {
                         bwyj.SetTemperature(mainActivity.SterownikClient.Temps.get("BojWyj").Temperature);
                         dom.SetTemperature(mainActivity.SterownikClient.Temps.get("Dom").Temperature);
                     }
+
+                FrameLayout statusLayout = (FrameLayout)mainActivity.findViewById(R.id.status_layout);
+                TextView statusText = (TextView)mainActivity.findViewById(R.id.status_text);
+
+                if(statusLayout != null)
+                {
+                    String text = "";
+                    int bacgroud = Color.WHITE;
+                    int visiblity = View.INVISIBLE;
+
+                    if(mainActivity.SterownikClient.TrybCO.BrakPaliwa)
+                    {
+                        text = "BRAK PALIWA";
+                        bacgroud =Color.RED;
+                        visiblity = View.VISIBLE;
+                    }else
+                    if(mainActivity.SterownikClient.TrybCO.Grzanie)
+                    {
+                        text = "GRZANIE";
+                        bacgroud =Color.BLUE;
+                        visiblity = View.VISIBLE;
+                    }else
+                    if(mainActivity.SterownikClient.TrybCO.Przedmuch)
+                    {
+                        text = "PRZEDMUCH";
+                        bacgroud =Color.BLUE;
+                        visiblity = View.VISIBLE;
+                    }else
+                    {
+                        visiblity = View.INVISIBLE;
+                    }
+
+                    statusText.setText(text);
+                    statusLayout.setBackgroundColor(bacgroud);
+                    statusLayout.setVisibility(visiblity);
+                }
             }
         });
     }
@@ -63,13 +111,34 @@ public class Schemat extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_schemat, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        ImageView img =(ImageView) mainActivity.findViewById(R.id.imageView);
+        if(img!=null)
+        {
+            BitmapFactory.Options myOptions = new BitmapFactory.Options();
+            myOptions.inDither = true;
+            myOptions.inScaled = false;
+            myOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;
+            myOptions.inDither = false;
+            myOptions.inPurgeable = true;
+            Bitmap preparedBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.tlo, myOptions);
+            Drawable background = new BitmapDrawable(preparedBitmap);
+            img.setImageDrawable(background);
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event

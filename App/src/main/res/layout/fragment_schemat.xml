@@ -14,8 +14,7 @@
         android:id="@+id/imageView"
         android:layout_x="178dp"
         android:layout_y="14dp"
-        android:src="@drawable/tlo"
-        android:scaleType="fitCenter" />
+        android:src="@drawable/tlo" />
 
     <com.example.app.Sterownik.TempSensorView
         android:layout_width="117dp"
@@ -153,7 +152,27 @@
         android:padding="5dp"
         android:textSize="15sp" />
 
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="4dp"
+        android:layout_y="78dp"
+        android:id="@+id/status_layout"
+        android:background="#4849c6"
+        android:visibility="invisible"
+        android:padding="10dp">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:id="@+id/status_text"
+            android:layout_x="30dp"
+            android:layout_y="93dp"
+            android:layout_gravity="center"
+            android:textColor="#ffffff"
+            android:textSize="25dp"
+            android:textStyle="bold" />
 
-
+    </FrameLayout>
 </AbsoluteLayout>

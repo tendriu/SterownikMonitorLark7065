@@ -7,6 +7,11 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.PixelFormat;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class MainActivity extends Activity
@@ -42,7 +48,6 @@ public class MainActivity extends Activity
 
         SterownikClient = new Sterownik("192.168.0.23",80);
         SterownikClient.Connect();
-
 
         SchematFragment = Schemat.newInstance();
         UstawieniaFragment = Ustawienia.newInstance();
