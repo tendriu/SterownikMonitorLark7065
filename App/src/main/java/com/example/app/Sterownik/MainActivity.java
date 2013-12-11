@@ -15,6 +15,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -22,6 +23,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -46,7 +49,13 @@ public class MainActivity extends Activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+
         SterownikClient = new Sterownik("192.168.0.23",80);
+      //  SterownikClient.TrybCO.Przedmuch = true;
+      //  SterownikClient.TrybCO.Status = TrybStatusEnum.Sterowanie;
         SterownikClient.Connect();
 
         SchematFragment = Schemat.newInstance();
@@ -63,6 +72,12 @@ public class MainActivity extends Activity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
     }
 
     @Override
@@ -122,21 +137,16 @@ public class MainActivity extends Activity
                 break;
         }
     }
-
+/*
     public void restoreActionBar() {
         ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(mTitle);
     }
+*/
 
-    public void OnClick(View sender)
-    {
-        TempSensorView co = (TempSensorView)findViewById(R.id.co);
-        co.SetTemperature(co.Temperature + 0.25);
-    }
-
-
+/*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (!mNavigationDrawerFragment.isDrawerOpen()) {
@@ -161,6 +171,7 @@ public class MainActivity extends Activity
         }
         return super.onOptionsItemSelected(item);
     }
+    */
 
     @Override
     public void onFragmentInteraction(Uri uri) {

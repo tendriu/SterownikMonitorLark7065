@@ -41,6 +41,8 @@ public class SterownikConnection
                     InStream = new BufferedReader(new InputStreamReader(Client.getInputStream()));
 
                     Connected = true;
+
+                    OnConnected();
                 }
                 catch (Exception ex)
                 {
@@ -49,6 +51,9 @@ public class SterownikConnection
             }})).start();
     }
 
+    public void OnConnected() throws IOException {
+
+    }
 
     void OnConnectionError(String message)
     {

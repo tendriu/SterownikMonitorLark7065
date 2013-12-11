@@ -55,6 +55,13 @@ public class Sterownik extends SterownikConnection {
         Settings = new AppSettings();
     }
 
+    @Override
+    public void OnConnected() throws IOException {
+        super.OnConnected();
+
+        ReadSettings();
+    }
+
     public String GetSterownikIP() {
         return "192.168.0.12";
     }
@@ -106,6 +113,8 @@ public class Sterownik extends SterownikConnection {
         int length = (len[0] | (len[1] << 8));
         byte[] valBuff = ReadArray(length);
         String value = new String(valBuff);
+        if(value.indexOf(0)>=0)
+            return  value.substring(0,value.indexOf(0));
         return value;
     }
 
@@ -164,5 +173,6 @@ public class Sterownik extends SterownikConnection {
         TrybCO.Grzanie = (data[3] == 0 ? false : true);
 
     }
+
 
 }

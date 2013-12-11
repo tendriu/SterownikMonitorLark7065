@@ -6,4 +6,8 @@ package com.example.app.Sterownik;
 
 public abstract class Tryb {
     public TrybStatusEnum Status;
+    public Tryb()
+    {
+        Status = TrybStatusEnum.Zatrzymany;
+    }
 }
