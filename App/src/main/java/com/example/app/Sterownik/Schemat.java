@@ -69,10 +69,9 @@ public class Schemat extends Fragment {
                         dom.SetTemperature(mainActivity.SterownikClient.Temps.get("Dom").Temperature);
                     }
 
-                FrameLayout statusLayout = (FrameLayout)mainActivity.findViewById(R.id.status_layout);
-                TextView statusText = (TextView)mainActivity.findViewById(R.id.status_text);
+                TextView trybinfoText = (TextView)mainActivity.findViewById(R.id.trybinfo_text);
 
-                if(statusLayout != null)
+                if(trybinfoText != null)
                 {
                     String text = "";
                     int bacgroud = Color.WHITE;
@@ -100,9 +99,28 @@ public class Schemat extends Fragment {
                         visiblity = View.INVISIBLE;
                     }
 
-                    statusText.setText(text);
-                    statusLayout.setBackgroundColor(bacgroud);
-                    statusLayout.setVisibility(visiblity);
+                    trybinfoText.setText(text);
+                    trybinfoText.setBackgroundColor(bacgroud);
+                    trybinfoText.setVisibility(visiblity);
+                }
+
+                TextView statusText = (TextView)mainActivity.findViewById(R.id.trybstatus_text);
+                TextView trybText = (TextView)mainActivity.findViewById(R.id.tryb_text);
+
+                if(statusText!=null && trybText != null)
+                {
+                    if(mainActivity.SterownikClient.TrybCO.Status == TrybStatusEnum.Zatrzymany)
+                    {
+                        statusText.setVisibility(View.INVISIBLE);
+                        trybText.setVisibility(View.INVISIBLE);
+                    }else
+                    {
+                        String status = mainActivity.SterownikClient.TrybCO.Status.toString().toUpperCase();
+                        statusText.setText("STATUS: " + status);
+                        trybText.setText("TRYB CO, TEMP. ZADANA: " + String.valueOf(mainActivity.SterownikClient.Settings.TempCO));
+                        statusText.setVisibility(View.VISIBLE);
+                        trybText.setVisibility(View.VISIBLE);
+                    }
                 }
             }
         });

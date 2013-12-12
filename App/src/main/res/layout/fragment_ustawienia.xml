@@ -5,9 +5,62 @@
     tools:context="com.example.app.Sterownik.Ustawienia">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/ustawieniaLabel" />
+
+
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="left|top">
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+
+            <TextView android:text="Temperatura zadana CO:"
+                android:layout_gravity="center_vertical"
+                android:textSize="30dp" />
+
+                <NumberPicker
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:id="@+id/tempcoPicker"
+                    android:orientation="vertical" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <TextView android:text="Temperatura pompy CO:"
+                android:layout_gravity="center_vertical"
+                android:textSize="30dp"
+                android:layout_column="0" />
+
+            <NumberPicker
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/temppompyPicker"
+                android:layout_column="1" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <TextView android:text="Histereza CO:"
+                android:layout_gravity="center_vertical"
+                android:textSize="30dp"
+                android:layout_column="0" />
+
+            <NumberPicker
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/histrezaPicker"
+                android:layout_column="1" />
+        </TableRow>
+    </TableLayout>
 
 </FrameLayout>

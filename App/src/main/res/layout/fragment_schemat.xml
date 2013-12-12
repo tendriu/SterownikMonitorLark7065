@@ -143,7 +143,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/editText"
         android:layout_x="97dp"
-        android:layout_y="470dp"
+        android:layout_y="472dp"
         android:text="POMPA KOL."
         android:singleLine="false"
         android:focusable="false"
@@ -153,26 +153,56 @@
         android:textSize="15sp" />
 
     <FrameLayout
-        android:layout_width="wrap_content"
+        android:layout_width="1052dp"
         android:layout_height="wrap_content"
-        android:layout_x="4dp"
-        android:layout_y="78dp"
-        android:id="@+id/status_layout"
-        android:background="#4849c6"
-        android:visibility="invisible"
-        android:padding="10dp">
+        android:layout_x="10dp"
+        android:layout_y="530dp"
+        android:id="@+id/tryb_layout"
+        android:visibility="visible">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
-            android:id="@+id/status_text"
-            android:layout_x="30dp"
-            android:layout_y="93dp"
-            android:layout_gravity="center"
+            android:text="STATUS: ZATRZYMANY"
+            android:id="@+id/trybstatus_text"
+            android:layout_gravity="center|right"
             android:textColor="#ffffff"
             android:textSize="25dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:padding="10dp"
+            android:background="#5351ff"
+            android:visibility="visible"
+            android:autoText="false" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TRYB CO, TEMP. ZADANA: 55C"
+            android:id="@+id/tryb_text"
+            android:layout_gravity="center|center_horizontal"
+            android:textColor="#ffffff"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            android:padding="10dp"
+            android:background="#5351ff"
+            android:visibility="visible" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BRAK PALIWA"
+                android:id="@+id/trybinfo_text"
+                android:textColor="#ffffff"
+                android:textSize="25dp"
+                android:padding="10dp"
+                android:background="#4849c6"
+                android:layout_gravity="left|center_vertical"
+                android:textStyle="bold" />
     </FrameLayout>
+    <com.example.app.Sterownik.PompaView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_x="201dp"
+        android:layout_y="426dp" />
 </AbsoluteLayout>
