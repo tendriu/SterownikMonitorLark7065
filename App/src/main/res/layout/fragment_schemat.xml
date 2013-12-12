@@ -27,16 +27,16 @@
     <com.example.app.Sterownik.TempSensorView
         android:layout_width="117dp"
         android:layout_height="wrap_content"
-        android:layout_x="717dp"
-        android:layout_y="32dp"
+        android:layout_x="712dp"
+        android:layout_y="25dp"
         attr:Name="DOM"
         android:id="@+id/dom" />
 
     <com.example.app.Sterownik.TempSensorView
         android:layout_width="117dp"
         android:layout_height="wrap_content"
-        android:layout_x="534dp"
-        android:layout_y="220dp"
+        android:layout_x="537dp"
+        android:layout_y="216dp"
         attr:Name="CWU"
         android:id="@+id/cwu" />
 
@@ -81,6 +81,7 @@
             attr:Name="B.WYJ"
             android:id="@+id/bwyj"
             android:layout_gravity="right|center_vertical" />
+
     </FrameLayout>
 
     <FrameLayout
@@ -200,9 +201,28 @@
                 android:layout_gravity="left|center_vertical"
                 android:textStyle="bold" />
     </FrameLayout>
+
     <com.example.app.Sterownik.PompaView
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_x="201dp"
-        android:layout_y="426dp" />
+        android:layout_x="974dp"
+        android:layout_y="270dp"
+        android:id="@+id/pompa_co"
+        android:layout_gravity="left|top" />
+
+    <com.example.app.Sterownik.PompaView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_x="202dp"
+        android:layout_y="428dp"
+        android:id="@+id/pompa_kol"
+        android:layout_gravity="left|top" />
+
+    <com.example.app.Sterownik.WentylatorView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_x="784dp"
+        android:id="@+id/wentylator"
+        android:layout_y="424dp" />
+
 </AbsoluteLayout>

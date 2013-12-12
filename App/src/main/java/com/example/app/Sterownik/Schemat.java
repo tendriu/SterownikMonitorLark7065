@@ -122,6 +122,23 @@ public class Schemat extends Fragment {
                         trybText.setVisibility(View.VISIBLE);
                     }
                 }
+
+                PompaView pco = (PompaView)mainActivity.findViewById(R.id.pompa_co);
+                PompaView pkol = (PompaView)mainActivity.findViewById(R.id.pompa_kol);
+                WentylatorView went = (WentylatorView)mainActivity.findViewById(R.id.wentylator);
+
+                if(mainActivity.SterownikClient.PompaCO.Status)
+                    pco.StartRotate(mainActivity);
+                else pco.StopRotating();
+
+                if(mainActivity.SterownikClient.PompaKolektory.Status)
+                    pkol.StartRotate(mainActivity);
+                else pkol.StopRotating();
+
+                if(mainActivity.SterownikClient.Wentylator.Status)
+                    went.StartRotate(mainActivity);
+                else went.StopRotating();
+
             }
         });
     }
@@ -183,7 +200,7 @@ public class Schemat extends Fragment {
 
                     }
                 }
-            }, 0, 1000);
+            }, 0, 2000);
 
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
