@@ -12,6 +12,8 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -101,7 +103,7 @@ public class Schemat extends Fragment {
 
                     trybinfoText.setText(text);
                     trybinfoText.setBackgroundColor(bacgroud);
-                    trybinfoText.setVisibility(visiblity);
+                    SetViewVisiblityFade(trybinfoText,visiblity);
                 }
 
                 TextView statusText = (TextView)mainActivity.findViewById(R.id.trybstatus_text);
@@ -206,6 +208,27 @@ public class Schemat extends Fragment {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+    }
+
+    void SetViewVisiblityFade(View view, int visiblity)
+    {
+        if(visiblity == View.VISIBLE)
+        {
+            view.setVisibility(View.VISIBLE);
+          //  Animation anim = AnimationUtils.loadAnimation(mainActivity, R.anim.fade_id);
+          //  view.startAnimation(anim);
+        }
+        else
+        {
+            view.setVisibility(View.INVISIBLE);
+        }
+       /* if(view.getAlpha() == 0)
+        {
+            view.setVisibility(View.VISIBLE);
+            view.clearAnimation();
+            Animation anim = AnimationUtils.loadAnimation(mainActivity, R.anim.fade_id);
+            view.startAnimation(anim);
+        }*/
     }
 
     @Override

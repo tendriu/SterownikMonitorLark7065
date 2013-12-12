@@ -18,7 +18,7 @@ public class TempSensorView extends View {
 
     public double Temperature = 0;
     public String SensorName = "NONE";
-    public int FontSize = 20;
+    public int FontSize = 23;
 
     public TempSensorView(Context context) {
         super(context);
@@ -60,7 +60,7 @@ public class TempSensorView extends View {
     String tempToString()
     {
         DecimalFormat decimalFormat = new DecimalFormat("#.##");
-        return  decimalFormat.format(Temperature);
+        return  decimalFormat.format(Temperature)+"°";
     }
 
     @Override
@@ -88,7 +88,7 @@ public class TempSensorView extends View {
         p.setColor(Color.BLACK);
         canvas.drawText(tempToString(),3,FontSize,p);
 
-        float znakWidth = p.measureText("°C") + 6;
+       /* float znakWidth = p.measureText("°C") + 6;
         Left = Right-1;
         Right +=znakWidth;
 
@@ -100,8 +100,9 @@ public class TempSensorView extends View {
         p.setColor(Color.BLACK);
         canvas.drawText("°C",Left+3,FontSize,p);
 
-        Left +=znakWidth;
+        Left +=znakWidth;*/
         float nameWidth = p.measureText(SensorName) + 6;
+        Left = Right;
         Right+=nameWidth;
         p.setColor(Color.BLACK);
         canvas.drawRect(Left,0,Right,height, p);
@@ -119,7 +120,7 @@ public class TempSensorView extends View {
         Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
         p.setTextSize(FontSize);
 
-        float width = p.measureText(tempToString()) + 6 +p.measureText("°C") + 6 + p.measureText(SensorName) + 6;
+        float width = p.measureText(tempToString()) + 6  + p.measureText(SensorName) + 6;
         setMeasuredDimension((int)width,FontSize +6);
 
     }

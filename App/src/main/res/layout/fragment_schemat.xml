@@ -27,8 +27,8 @@
     <com.example.app.Sterownik.TempSensorView
         android:layout_width="117dp"
         android:layout_height="wrap_content"
-        android:layout_x="712dp"
-        android:layout_y="25dp"
+        android:layout_x="710dp"
+        android:layout_y="22dp"
         attr:Name="DOM"
         android:id="@+id/dom" />
 
