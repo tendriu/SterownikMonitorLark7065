@@ -38,6 +38,7 @@ public class Schemat extends Fragment {
 
     }
 
+boolean state = false;
     public void Update() throws IOException {
 
         if (mainActivity.SterownikClient.Connected)
@@ -103,8 +104,14 @@ public class Schemat extends Fragment {
 
                     trybinfoText.setText(text);
                     trybinfoText.setBackgroundColor(bacgroud);
-                    SetViewVisiblityFade(trybinfoText,visiblity);
+                  //  SetViewVisiblityFade(trybinfoText,visiblity);
                 }
+
+                state = !state;
+               // if(state)
+                    SetViewVisiblityFade(trybinfoText,View.VISIBLE);
+              //  else
+              //      SetViewVisiblityFade(trybinfoText,View.INVISIBLE);
 
                 TextView statusText = (TextView)mainActivity.findViewById(R.id.trybstatus_text);
                 TextView trybText = (TextView)mainActivity.findViewById(R.id.tryb_text);
@@ -202,7 +209,7 @@ public class Schemat extends Fragment {
 
                     }
                 }
-            }, 0, 2000);
+            }, 0, 4000);
 
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
@@ -214,21 +221,24 @@ public class Schemat extends Fragment {
     {
         if(visiblity == View.VISIBLE)
         {
-            view.setVisibility(View.VISIBLE);
-          //  Animation anim = AnimationUtils.loadAnimation(mainActivity, R.anim.fade_id);
-          //  view.startAnimation(anim);
+            Animation lastAnim = view.getAnimation();
+
+            Animation anim = AnimationUtils.loadAnimation(mainActivity, R.anim.fade_id);
+            anim.setFillAfter(true);
+            anim.reset();
+            view.clearAnimation();
+            view.startAnimation(anim);
+
+            Animation a_ = view.getAnimation();
         }
         else
         {
-            view.setVisibility(View.INVISIBLE);
-        }
-       /* if(view.getAlpha() == 0)
-        {
-            view.setVisibility(View.VISIBLE);
+            Animation anim = AnimationUtils.loadAnimation(mainActivity, R.anim.fade_out);
+            anim.setFillAfter(true);
+            anim.reset();
             view.clearAnimation();
-            Animation anim = AnimationUtils.loadAnimation(mainActivity, R.anim.fade_id);
             view.startAnimation(anim);
-        }*/
+        }
     }
 
     @Override
