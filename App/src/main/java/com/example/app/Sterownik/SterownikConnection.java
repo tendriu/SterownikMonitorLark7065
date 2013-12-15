@@ -20,6 +20,7 @@ public class SterownikConnection
     public String IP;
     public int Port;
     public boolean Connected;
+    public boolean Connecting = false;
 
     public SterownikConnection(String ip, int port)
     {
@@ -35,17 +36,21 @@ public class SterownikConnection
                 public void run() {
                     try
                 {
+                    Connecting = true;
                     Client = new Socket(IP, Port);
+                    Client.setSoTimeout(4000);
 
                     OutStream = new DataOutputStream(Client.getOutputStream());
                     InStream = new BufferedReader(new InputStreamReader(Client.getInputStream()));
 
                     Connected = true;
-
+                    Connecting = false;
                     OnConnected();
                 }
                 catch (Exception ex)
                 {
+                    Connected = false;
+                    Connecting = false;
                     OnConnectionError(ex.getMessage());
                 }
             }})).start();
@@ -64,7 +69,9 @@ public class SterownikConnection
         if (Client != null && Client.isConnected())
         {
             Client.close();
+
         }
+        Connected = false;
     }
 
     protected void WriteProcedureHeader(short procID, byte... param) throws IOException {

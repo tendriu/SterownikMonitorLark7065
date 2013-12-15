@@ -6,13 +6,16 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -43,9 +46,26 @@ boolean state = false;
 
         if (mainActivity.SterownikClient.Connected)
         {
-            mainActivity.SterownikClient.ReadTemps();
-            mainActivity.SterownikClient.ReadTrybCO();
-            mainActivity.SterownikClient.ReadDevicesState();
+            TextView brakPol = (TextView)mainActivity.findViewById(R.id.brakpolView);
+            if(brakPol!=null && brakPol.getVisibility() == View.VISIBLE)
+                brakPol.setVisibility(View.INVISIBLE);
+
+            try
+            {
+                mainActivity.SterownikClient.ReadTemps();
+                mainActivity.SterownikClient.ReadTrybCO();
+                mainActivity.SterownikClient.ReadDevicesState();
+            }catch (Exception ex)
+            {
+                mainActivity.SterownikClient.Disconnect();
+            }
+        }
+        else
+        {
+            ((TextView)mainActivity.findViewById(R.id.brakpolView)).setVisibility(View.VISIBLE);
+
+            if(mainActivity.SterownikClient.Connecting == false)
+                 mainActivity.SterownikClient.Connect();
         }
 
         mainActivity.runOnUiThread(new Runnable() {
@@ -85,6 +105,13 @@ boolean state = false;
                         text = "BRAK PALIWA";
                         bacgroud =Color.RED;
                         visiblity = View.VISIBLE;
+
+                        if(mainActivity.SterownikClient.TrybCO.Status == TrybStatusEnum.Sterowanie)
+                        {
+                            MediaPlayer player = MediaPlayer.create(mainActivity,Settings.System.DEFAULT_NOTIFICATION_URI);
+                            player.start();
+                        }
+
                     }else
                     if(mainActivity.SterownikClient.TrybCO.Grzanie)
                     {
@@ -104,14 +131,8 @@ boolean state = false;
 
                     trybinfoText.setText(text);
                     trybinfoText.setBackgroundColor(bacgroud);
-                  //  SetViewVisiblityFade(trybinfoText,visiblity);
+                    SetViewVisiblityFade(trybinfoText,visiblity);
                 }
-
-                state = !state;
-               // if(state)
-                    SetViewVisiblityFade(trybinfoText,View.VISIBLE);
-              //  else
-              //      SetViewVisiblityFade(trybinfoText,View.INVISIBLE);
 
                 TextView statusText = (TextView)mainActivity.findViewById(R.id.trybstatus_text);
                 TextView trybText = (TextView)mainActivity.findViewById(R.id.tryb_text);
@@ -120,15 +141,15 @@ boolean state = false;
                 {
                     if(mainActivity.SterownikClient.TrybCO.Status == TrybStatusEnum.Zatrzymany)
                     {
-                        statusText.setVisibility(View.INVISIBLE);
-                        trybText.setVisibility(View.INVISIBLE);
+                        SetViewVisiblityFade(statusText,View.INVISIBLE);
+                        SetViewVisiblityFade(trybText,View.INVISIBLE);
                     }else
                     {
                         String status = mainActivity.SterownikClient.TrybCO.Status.toString().toUpperCase();
                         statusText.setText("STATUS: " + status);
                         trybText.setText("TRYB CO, TEMP. ZADANA: " + String.valueOf(mainActivity.SterownikClient.Settings.TempCO));
-                        statusText.setVisibility(View.VISIBLE);
-                        trybText.setVisibility(View.VISIBLE);
+                        SetViewVisiblityFade(statusText,View.VISIBLE);
+                        SetViewVisiblityFade(trybText,View.VISIBLE);
                     }
                 }
 
@@ -219,25 +240,20 @@ boolean state = false;
 
     void SetViewVisiblityFade(View view, int visiblity)
     {
-        if(visiblity == View.VISIBLE)
+        if(visiblity == View.INVISIBLE)
         {
-            Animation lastAnim = view.getAnimation();
+            if(view.getVisibility() == View.VISIBLE) {
 
-            Animation anim = AnimationUtils.loadAnimation(mainActivity, R.anim.fade_id);
-            anim.setFillAfter(true);
-            anim.reset();
-            view.clearAnimation();
-            view.startAnimation(anim);
-
-            Animation a_ = view.getAnimation();
-        }
-        else
+                AnimationSet out_ =(AnimationSet) AnimationUtils.makeOutAnimation(mainActivity, false);
+                view.startAnimation(out_);
+                view.setVisibility(View.INVISIBLE);
+            }
+        }else
+        if(view.getVisibility() == View.INVISIBLE)
         {
-            Animation anim = AnimationUtils.loadAnimation(mainActivity, R.anim.fade_out);
-            anim.setFillAfter(true);
-            anim.reset();
-            view.clearAnimation();
-            view.startAnimation(anim);
+            Animation in = AnimationUtils.loadAnimation(mainActivity, R.anim.fade_id);
+            view.startAnimation(in);
+            view.setVisibility(View.VISIBLE);
         }
     }
 
