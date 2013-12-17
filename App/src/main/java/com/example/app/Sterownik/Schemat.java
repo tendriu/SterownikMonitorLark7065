@@ -46,10 +46,6 @@ boolean state = false;
 
         if (mainActivity.SterownikClient.Connected)
         {
-            TextView brakPol = (TextView)mainActivity.findViewById(R.id.brakpolView);
-            if(brakPol!=null && brakPol.getVisibility() == View.VISIBLE)
-                brakPol.setVisibility(View.INVISIBLE);
-
             try
             {
                 mainActivity.SterownikClient.ReadTemps();
@@ -62,8 +58,6 @@ boolean state = false;
         }
         else
         {
-            ((TextView)mainActivity.findViewById(R.id.brakpolView)).setVisibility(View.VISIBLE);
-
             if(mainActivity.SterownikClient.Connecting == false)
                  mainActivity.SterownikClient.Connect();
         }
@@ -71,6 +65,17 @@ boolean state = false;
         mainActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
+
+                    TextView brakPol = (TextView)mainActivity.findViewById(R.id.brakpolView);
+
+                    if(brakPol!=null)
+                    {
+                        if(mainActivity.SterownikClient.Connected)
+                            brakPol.setVisibility(View.INVISIBLE);
+                        else
+                            brakPol.setVisibility(View.VISIBLE);
+                    }
+
 
                     TempSensorView co = (TempSensorView) mainActivity.findViewById(R.id.co);
                     TempSensorView cwu = (TempSensorView) mainActivity.findViewById(R.id.cwu);
@@ -104,7 +109,7 @@ boolean state = false;
                     {
                         text = "BRAK PALIWA";
                         bacgroud =Color.RED;
-                        visiblity = View.VISIBLE;
+                        visiblity = View.GONE;
 
                         if(mainActivity.SterownikClient.TrybCO.Status == TrybStatusEnum.Sterowanie)
                         {
@@ -255,6 +260,17 @@ boolean state = false;
             view.startAnimation(in);
             view.setVisibility(View.VISIBLE);
         }
+        else
+          if(visiblity == View.GONE)
+          {
+              Animation pulse = AnimationUtils.loadAnimation(mainActivity, R.anim.pulse);
+              if(view.getAnimation() != pulse)
+              {
+                  view.clearAnimation();
+                  view.startAnimation(pulse);
+                  view.setVisibility(View.VISIBLE);
+              }
+          }
     }
 
     @Override
