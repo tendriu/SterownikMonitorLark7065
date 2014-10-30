@@ -1,5 +1,9 @@
 package com.example.app.Sterownik;
 
+import com.example.app.Sterownik.BinarySerialization.BinarySerializer;
+import com.example.app.Sterownik.BinarySerialization.SerializableStruct;
+
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -16,7 +20,7 @@ public class SterownikConnection
 {
     public Socket Client;
     public DataOutputStream OutStream;
-    public BufferedReader InStream;
+    public BufferedInputStream InStream;
     public String IP;
     public int Port;
     public boolean Connected;
@@ -41,7 +45,7 @@ public class SterownikConnection
                     Client.setSoTimeout(4000);
 
                     OutStream = new DataOutputStream(Client.getOutputStream());
-                    InStream = new BufferedReader(new InputStreamReader(Client.getInputStream()));
+                    InStream = new BufferedInputStream (Client.getInputStream());
 
                     Connected = true;
                     Connecting = false;
@@ -56,7 +60,7 @@ public class SterownikConnection
             }})).start();
     }
 
-    public void OnConnected() throws IOException {
+    public void OnConnected() throws Exception {
 
     }
 
@@ -87,9 +91,10 @@ public class SterownikConnection
     public byte[] ReadArray(int length) throws IOException
     {
         if (length == 0) return null;
-        char[] buff = new char[length];
+        byte[] buff = new byte[length];
         InStream.read(buff, 0, length);
-        return Charset.forName("UTF-8").encode(CharBuffer.wrap(buff)).array();
+
+        return buff;
     }
 
     public int ReadInt08() throws IOException
@@ -125,5 +130,21 @@ public class SterownikConnection
     {
         WriteProcedureHeader(procID, param);
         return ReadArray(returnLength);
+    }
+
+    public SerializableStruct GetProcedureData(int id) throws Exception
+    {
+        SerializableStruct ser = null;
+        synchronized (Client)
+        {
+            OutStream.writeByte(id);
+            int res = ReadInt08();
+            if (res == 1)
+            {
+                ser = BinarySerializer.Deserialize(InStream,OutStream);
+                ReadInt08();
+            }
+        }
+        return ser;
     }
 }

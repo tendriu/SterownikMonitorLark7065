@@ -53,7 +53,7 @@ public class MainActivity extends Activity
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 
-        SterownikClient = new Sterownik("192.168.0.23",80);
+        SterownikClient = new Sterownik("192.168.88.38",81);
       //  SterownikClient.TrybCO.Przedmuch = true;
       //  SterownikClient.TrybCO.Status = TrybStatusEnum.Sterowanie;
         SterownikClient.Connect();

@@ -18,6 +18,7 @@ public class TempSensorView extends View {
 
     public double Temperature = 0;
     public String SensorName = "NONE";
+    public TempSensorDeviceStatus Status = TempSensorDeviceStatus.OK;
     public int FontSize = 23;
 
     public TempSensorView(Context context) {
@@ -44,9 +45,10 @@ public class TempSensorView extends View {
         super(context, attrs, defStyle);
     }
 
-    public void SetTemperature(double value)
+    public void UpdateValues(TempSensorDevice device)
     {
-        Temperature = value;
+        Temperature = device.Temperature;
+        Status = device.Status;
         requestLayout();
         invalidate();
     }
@@ -59,6 +61,9 @@ public class TempSensorView extends View {
     }
     String tempToString()
     {
+        if(Status != TempSensorDeviceStatus.OK)
+            return  "--";
+
         DecimalFormat decimalFormat = new DecimalFormat("#.##");
         return  decimalFormat.format(Temperature)+"°";
     }

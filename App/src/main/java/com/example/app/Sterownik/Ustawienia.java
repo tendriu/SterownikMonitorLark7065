@@ -41,7 +41,7 @@ public class Ustawienia extends Fragment {
 
                     try {
                         mainActivity.SterownikClient.ReadSettings();
-                    } catch (IOException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                     mainActivity.runOnUiThread(new Runnable() {

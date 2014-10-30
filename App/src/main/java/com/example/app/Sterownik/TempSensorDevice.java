@@ -9,8 +9,10 @@ public class TempSensorDevice {
     public String Name;
     public String Description;
     public double Temperature;
+    public TempSensorDeviceStatus Status;
 
     public TempSensorDevice() {
+        Status = TempSensorDeviceStatus.OK;
     }
 
     public TempSensorDevice(String name) {

@@ -87,14 +87,14 @@ boolean state = false;
                     TempSensorView dom = (TempSensorView) mainActivity.findViewById(R.id.dom);
 
                     if (co != null) {
-                        co.SetTemperature(mainActivity.SterownikClient.Temps.get("CO").Temperature);
-                        cwu.SetTemperature(mainActivity.SterownikClient.Temps.get("CWU").Temperature);
-                        zew.SetTemperature(mainActivity.SterownikClient.Temps.get("Zew").Temperature);
-                        kwej.SetTemperature(mainActivity.SterownikClient.Temps.get("KolWej").Temperature);
-                        kwyj.SetTemperature(mainActivity.SterownikClient.Temps.get("KolWyj").Temperature);
-                        bwej.SetTemperature(mainActivity.SterownikClient.Temps.get("BojWej").Temperature);
-                        bwyj.SetTemperature(mainActivity.SterownikClient.Temps.get("BojWyj").Temperature);
-                        dom.SetTemperature(mainActivity.SterownikClient.Temps.get("Dom").Temperature);
+                        co.UpdateValues(mainActivity.SterownikClient.Temps.get("CO"));
+                        cwu.UpdateValues(mainActivity.SterownikClient.Temps.get("CWU"));
+                        zew.UpdateValues(mainActivity.SterownikClient.Temps.get("Zew"));
+                        kwej.UpdateValues(mainActivity.SterownikClient.Temps.get("KolWej"));
+                        kwyj.UpdateValues(mainActivity.SterownikClient.Temps.get("KolWyj"));
+                        bwej.UpdateValues(mainActivity.SterownikClient.Temps.get("BojWej"));
+                        bwyj.UpdateValues(mainActivity.SterownikClient.Temps.get("BojWyj"));
+                        dom.UpdateValues(mainActivity.SterownikClient.Temps.get("Dom"));
                     }
 
                 TextView trybinfoText = (TextView)mainActivity.findViewById(R.id.trybinfo_text);

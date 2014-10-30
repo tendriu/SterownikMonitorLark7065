@@ -2,6 +2,9 @@ package com.example.app.Sterownik;
 
 import android.util.Xml;
 
+import com.example.app.Sterownik.BinarySerialization.DataSerialized;
+import com.example.app.Sterownik.BinarySerialization.SerializableStruct;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -56,70 +59,58 @@ public class Sterownik extends SterownikConnection {
     }
 
     @Override
-    public void OnConnected() throws IOException {
+    public void OnConnected() throws Exception {
         super.OnConnected();
 
         ReadSettings();
     }
 
     public String GetSterownikIP() {
-        return "192.168.0.12";
+        return "192.168.88.38";
     }
 
-    public void ReadTemps() throws IOException {
+    public void ReadTemps() throws Exception {
         synchronized (Client) {
-            ReadAllTemps();
-        }
-    }
-
-    private void ReadAllTemps() throws IOException {
-
-        WriteProcedureHeader((short) 5);
-        int count = ReadInt08();
-        for (int x = 0; x < count; x++) {
-            int nameLength = ReadInt08();
-            String name = ReadString(nameLength);
-            byte[] buff = ReadArray(4);
-            if (Temps.containsKey(name)) {
-                Temps.get(name).Temperature = (buff[0] + buff[1] / 100.0f) * (buff[2] == 1 ? -1 : 1);
+            try {
+                ReadAllTemps();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }
 
-    public void WriteSetting(String valueName, String value) throws IOException {
-        ByteArrayOutputStream mem = new ByteArrayOutputStream();
-        byte[] nameBuff = valueName.getBytes();
-        mem.write((byte) nameBuff.length);
-        mem.write(nameBuff, 0, nameBuff.length);
-        byte[] valueBuff = value.getBytes();
-        mem.write(valueBuff, 0, valueBuff.length);
-        WriteProcedureHeader((short) 6, mem.toByteArray());
-    }
+    private void ReadAllTemps() throws Exception {
 
-    public void ReadDevicesState() throws IOException {
-        synchronized (Client) {
-            WriteProcedureHeader((short) 3, (byte) 1);
-            PompaCO.Status = (ReadArray(1)[0] == 1);
-            WriteProcedureHeader((short) 3, (byte) 2);
-            PompaKolektory.Status = (ReadArray(1)[0] == 1);
-            WriteProcedureHeader((short) 3, (byte) 3);
-            Wentylator.Status = (ReadArray(1)[0] == 1);
+        SerializableStruct data = GetProcedureData((byte) 4);
+        if (data == null) return;
+
+        for (DataSerialized dd : data.Data)
+        {
+            SerializableStruct czujnikData = (SerializableStruct)dd.Value;
+            String nazwa = czujnikData.GetData(0);
+            if (Temps.containsKey(nazwa))
+            {
+                TempSensorDevice temp = Temps.get(nazwa);
+                temp.Temperature = czujnikData.GetData(1);
+            //    temp.Type = (TempSensorDeviceType)czujnikData.GetData<byte>(2);
+                int stat = czujnikData.GetData(3);
+                temp.Status = TempSensorDeviceStatus.FromInt(stat);
+            }
         }
     }
 
-    public String ReadSetting(String name) throws IOException {
-        WriteProcedureHeader((short) 4, name.getBytes());
-        byte[] len = ReadArray(2);
-        int length = (len[0] | (len[1] << 8));
-        byte[] valBuff = ReadArray(length);
-        String value = new String(valBuff);
-        if(value.indexOf(0)>=0)
-            return  value.substring(0,value.indexOf(0));
-        return value;
+    public void ReadDevicesState() throws Exception {
+
+        SerializableStruct data = GetProcedureData(5);
+        if (data == null) return;
+
+        PompaCO.Status = data.GetData(0);
+        PompaKolektory.Status = data.GetData(1);
+        Wentylator.Status = data.GetData(2);
     }
 
     public void WriteSettings() throws IOException {
-        synchronized (Client) {
+       /* synchronized (Client) {
             WriteSetting("TempCO", String.valueOf(Settings.TempCO));
             WriteSetting("HisterezaCO", String.valueOf(Settings.HisterezaCO));
             WriteSetting("TempPompyCO", String.valueOf(Settings.TempPompyCO));
@@ -127,51 +118,29 @@ public class Sterownik extends SterownikConnection {
             //   WriteSetting("CzasWentDoBrakuPaliwa",String.valueOf(Settings.CzasWentDoBrakuPaliwa.Ticks));
             //  WriteSetting("CzasWentDoWygaszenia",String.valueOf( Settings.CzasWentDoWygaszenia.Ticks));
             //  WriteSetting("OkresPrzedmuchu", String.valueOf(Settings.OkresPrzedmuchu.));
-        }
-    }
-
-    public void ReadSettings() throws IOException {
-        synchronized (Client) {
-
-            Settings.TempCO = Integer.parseInt(ReadSetting("TempCO"));
-            Settings.HisterezaCO = Integer.parseInt(ReadSetting("HisterezaCO"));
-            Settings.TempPompyCO = Integer.parseInt(ReadSetting("TempPompyCO"));
-
-        }
-       /* TimeSpan timeSpanValue = TimeSpan.Zero;
-        if (TimeSpan.TryParse(ReadSetting("CzasPrzedmuchu"), out timeSpanValue))
-        {
-        Settings.CzasPrzedmuchu = timeSpanValue;
-        Settings.OnPropertyChanged("CzasPrzedmuchu");
-        }
-        if (TimeSpan.TryParse(ReadSetting("CzasWentDoBrakuPaliwa"), out timeSpanValue))
-        {
-        Settings.CzasWentDoBrakuPaliwa = timeSpanValue;
-        Settings.OnPropertyChanged("CzasWentDoBrakuPaliwa");
-        }
-        if (TimeSpan.TryParse(ReadSetting("CzasWentDoWygaszenia"), out timeSpanValue))
-        {
-        Settings.CzasWentDoWygaszenia = timeSpanValue;
-        Settings.OnPropertyChanged("CzasWentDoWygaszenia");
-        }
-        if (TimeSpan.TryParse(ReadSetting("OkresPrzedmuchu"), out timeSpanValue))
-        {
-        Settings.OkresPrzedmuchu = timeSpanValue;
-        Settings.OnPropertyChanged("OkresPrzedmuchu");
         }*/
     }
 
-    public void ReadTrybCO() throws IOException {
-        byte[] data = null;
-        synchronized (Client) {
-            WriteProcedureHeader((short) 2, (byte) 1);
-            data = ReadArray(4);
-        }
-        TrybCO.Status = TrybStatusEnum.values()[data[0]];
-        TrybCO.Przedmuch = (data[1] == 0 ? false : true);
-        TrybCO.BrakPaliwa = (data[2] == 0 ? false : true);
-        TrybCO.Grzanie = (data[3] == 0 ? false : true);
+    public void ReadSettings() throws Exception {
 
+        SerializableStruct data = GetProcedureData(7);
+        if (data == null) return;
+
+        Settings.TempCO = data.GetData(0);
+        Settings.TempCWU = data.GetData(1);
+        Settings.TempPompyCO = data.GetData(2);
+    }
+
+    public void ReadTrybCO() throws Exception {
+
+        SerializableStruct data = GetProcedureData(6);
+        if (data == null) return;
+
+        int status = data.GetData(1);
+        TrybCO.Status = TrybStatusEnum.values()[status];
+        TrybCO.Przedmuch = data.GetData(2);
+        TrybCO.BrakPaliwa = data.GetData(4);
+        TrybCO.Grzanie = data.GetData(3);
     }
 
 
